@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('./handin.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.cenCol {
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+}

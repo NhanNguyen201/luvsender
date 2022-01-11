@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+        
+        #app, canvas {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+        
+    </style>
+</head>
+<body>
+    <canvas id="app"></canvas>
+    <script type='text/javascript' src="./gsap.min.js"></script>
+    <script type='text/javascript' src="./opentype.min.js"></script>
+    <script type='text/javascript' src="./three.min.js"></script>
+    <script type='text/javascript' src="./GeometryUtils.js"></script>
+    <script type='text/javascript' src="./OrbitControls.js"></script>
+    <script type='text/javascript' src="./TTFLoader.js"></script>
+    <% if (locals.firstText && locals.secondText) { %>
+        <script type='text/javascript' src="./EffectComposer.js"></script>
+        <script type='text/javascript' src="./RenderPass.js"></script>
+        <script type='text/javascript' src="./CopyShader.js"></script>
+        <script type='text/javascript' src="./ShaderPass.js"></script>
+        <script type='text/javascript' src="./AfterimagePass.js"></script>
+        <script type='text/javascript' src="./AfterimageShader.js"></script>
+        <script type='text/javascript' src="./textPoints.js"></script>
+        <script type='text/javascript' src="./threeApp.js"></script>
+        <script>
+           firstText = JSON.parse('<%- JSON.stringify(firstText) %>');
+           secondText = JSON.parse('<%- JSON.stringify(secondText) %>');
+           const scene = new App(firstText, secondText);
+            document.addEventListener("DOMContentLoaded", e => {
+                scene.init();
+            })
+        </script>
+    <% }  else {%>
+        <script type='text/javascript' src="./notFound.js"></script>
+        <script>
+            const scene = new NotFoundApp();
+            document.addEventListener("DOMContentLoaded", e => {
+                 scene.init();
+             })
+         </script>
+    <% } %>
+</body>
+</html>
