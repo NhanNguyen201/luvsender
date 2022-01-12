@@ -11,11 +11,6 @@ const app = express()
 dotenv.config()
 app.use(helmet());
 
-// app.use(rateLimit({
-// 	windowMs: 30 * 60 * 1000, // 30 minutes
-// 	max: 50, // Limit each IP to 5 requests per `window` (here, per 15 minutes)
-// }))
-
 app.use(express.static("public"))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
