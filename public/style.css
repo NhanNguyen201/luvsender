@@ -1,13 +1,17 @@
-body {
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
+}
+body {
     background-image: url('./handin.jpg');
     background-size: cover;
 }
 
 .cenCol {
     margin: 50px auto;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     background: white;
 }
 .copy-btn {

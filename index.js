@@ -5,9 +5,11 @@ const helmet = require('helmet');
 const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit')
 const setSafeHeader = require('./middlewares/setHeaderMiddleWare')
+const getQuote = require('./helpers/getQuote')
 const removeAscent = require('./helpers/removeAscent')
 const Message = require('./models/message')
 const app = express()
+
 dotenv.config()
 app.use(helmet());
 
@@ -17,32 +19,37 @@ app.use(express.json())
 app.set("view engine", "ejs")
 
 app.use(setSafeHeader)
-app.get("/", (req, res) => {
-    res.render("index")
+app.get("/", async (req, res) => {
+    let quote = await getQuote()
+    res.render("index", { quote })
 })
 
-app.get("/new", (req, res) => {
+app.get("/new", async (req, res) => {
     res.render("new")
 })
 
 app.post("/new", rateLimit({
-	windowMs: 30 * 60 * 1000, // 30 minutes
-	max: 50, // Limit each IP to 5 requests per `window` (here, per 15 minutes)
-}),async (req, res) => {
+        windowMs: 30 * 60 * 1000, 
+        max: 50 
+    }),async (req, res) => {
     const newMessage = await Message.create({
         firstText:  removeAscent(req.body.firstText),
         secondText: removeAscent(req.body.secondText)
     })
-    return res.render("new", { newUrl: `${req.headers.host}/q?_id=${newMessage._id}` })
+    let quote = await getQuote()
+
+    return res.render("new", { newUrl: `${req.headers.host}/q?_id=${newMessage._id}`, quote })
 })
 
 app.get("/q", async(req, res) => {
     const { _id } = req.query;
+    let quote = await getQuote()
+
     try {
         const message = await Message.findById(_id)
-        return res.render("show", {firstText: message.firstText, secondText: message.secondText})
+        return res.render("show", {firstText: message.firstText, secondText: message.secondText, quote})
     } catch (error) {
-        return res.render("show")
+        return res.render("show", { quote })
     }
 })
 

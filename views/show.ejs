@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/heart.jpg">
-    <meta itemprop="name" content="Say love !!!">
+    <meta itemprop="name" content="Love sender">
     <meta itemprop="image" content="./heart.jpg">
+    <meta name="description" content='<%= locals.quote %>'>
     <!-- fb -->
     <meta property="og:type" content="Website">
-    <meta property="og:title" content="Say love !!!">
+    <meta property="og:title" content="Love sender">
     <meta property="og:image" content="./heart.jpg">
-    <title>Say love !😝</title>
+    <title><%= locals.quote %></title>
     <style>
         * {
             margin: 0;
@@ -53,18 +54,19 @@
             let txt_1 = JSON.parse('<%- JSON.stringify(locals.firstText) %>')
             let txt_2 = JSON.parse('<%- JSON.stringify(locals.secondText) %>')
             const scene = new App(txt_1, txt_2)
-            document.addEventListener("DOMContentLoaded", e => {
-                scene.init();
-            })
+            
         </script>
     <% }  else {%>
         <script type='text/javascript' src="./notFound.js"></script>
         <script>
             const scene = new NotFoundApp();
-            document.addEventListener("DOMContentLoaded", e => {
-                 scene.init();
-             })
          </script>
     <% } %>
+    <script >
+        document.addEventListener("DOMContentLoaded", e => {
+            scene.init();
+        })
+        console.log('<%- JSON.stringify(locals.quote) %>')
+    </script>
 </body>
 </html>

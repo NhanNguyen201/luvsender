@@ -5,12 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/heart.jpg">
+    <meta name="description" content='<%= locals.quote %>'>
+
     <title>Send to your luv ! 😝</title>
-    <meta itemprop="name" content="Say love !!!">
+    <meta itemprop="name" content="Send to your luv ! 😝">
     <meta itemprop="image" content="./heart.jpg">
     <!-- fb -->
     <meta property="og:type" content="Website">
-    <meta property="og:title" content="Say love !!!">
+    <meta property="og:title" content="Send to your luv ! 😝">
     <meta property="og:image" content="./heart.jpg">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
@@ -18,10 +20,13 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-5 cenCol">
+            <div class="col col-xl-6 col-lg-6 col-md-8 col-sm-10 col-xs-10 cenCol">
                 <h2 class="font-weight-light text-center">Send to your love !😝😝😝</h2>
                 <% if (locals.newUrl) { %>
-                    <input type="text" value="<%= newUrl %>" readonly class="form-control" id="url_input"/>
+                    <% if (locals.quote) { %>
+                        <i><%= locals.quote %></i>
+                    <% } %>
+                    <input type="text" value="<%= locals.newUrl %>" readonly class="form-control" id="url_input"/>
                     <button id="copy_btn" class="btn btn-primary copy-btn">Copy</button>
                 <% }  else { %>
                     <p>There is nothing here</p>
@@ -30,10 +35,12 @@
         </div>
     </div>
     <script type='text/javascript'>
-        const copyBtn = document.querySelector("#copy_btn")
-        const input = document.querySelector("#url_input")
-        copyBtn.onclick = () => {
-            navigator.clipboard.writeText(input.value)
+        if(document.querySelector("#copy_btn")) {
+            const copyBtn = document.querySelector("#copy_btn")
+            const input = document.querySelector("#url_input")
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(input.value)
+            }
         }
     </script>
 </body>
