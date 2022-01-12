@@ -50,9 +50,9 @@
         <script type='text/javascript' src="./textPoints.js"></script>
         <script type='text/javascript' src="./threeApp.js"></script>
         <script>
-           firstText = JSON.parse('<%- JSON.stringify(firstText) %>');
-           secondText = JSON.parse('<%- JSON.stringify(secondText) %>');
-           const scene = new App(firstText, secondText);
+            let txt_1 = JSON.parse('<%- JSON.stringify(locals.firstText) %>')
+            let txt_2 = JSON.parse('<%- JSON.stringify(locals.secondText) %>')
+            const scene = new App(txt_1, txt_2)
             document.addEventListener("DOMContentLoaded", e => {
                 scene.init();
             })
