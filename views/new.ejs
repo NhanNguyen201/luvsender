@@ -22,12 +22,15 @@
         <div class="row">
             <div class="col col-xl-6 col-lg-6 col-md-8 col-sm-10 col-xs-10 cenCol">
                 <h2 class="font-weight-light text-center">Send to your love !😝😝😝</h2>
-                <% if (locals.newUrl) { %>
+                <% if (locals.host && locals.linkId && locals.type) { %>
                     <% if (locals.quote) { %>
                         <i><%= locals.quote %></i>
                     <% } %>
-                    <input type="text" value="<%= locals.newUrl %>" readonly class="form-control" id="url_input"/>
-                    <button id="copy_btn" class="btn btn-primary copy-btn">Copy</button>
+                    <input type="text" value="<%= locals.host %>/<%= locals.type %>?_id=<%= locals.linkId %>" readonly class="form-control" id="url_input"/>
+                    <div class="btn-container">
+                        <button id="copy_btn" class="btn btn-primary copy-btn">Copy</button>
+                        <a href="/<%= locals.type %>?_id=<%= locals.linkId %>" class="btn btn-primary copy-btn" role="button">Go to the link</a>
+                    </div>
                 <% }  else { %>
                     <p>There is nothing here</p>
                 <% } %>    

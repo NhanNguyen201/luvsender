@@ -8,7 +8,7 @@ class TextPoints {
         this.lovePoses = lovePoses;
         this.spherePoses = spherePoses;
         this.colorPalete = ["#ccffff", "#1DF1FF", "#BDFF1D", "#FF6CD6", "#FFD9B7", "#6BFF68" ].map(eachColor => new THREE.Color(eachColor).getHex())
-        this.colorIdx = 0;
+        this.colorIdx = Math.floor(Math.random() * this.colorPalete.length);
         this.pointMat = new THREE.PointsMaterial( { color: new THREE.Color(this.colorPalete[this.colorIdx]), size: 0.1 } )
         this.geo = new THREE.Geometry();
         
@@ -21,16 +21,13 @@ class TextPoints {
 
     }
     init(scene) {
-        this.#getColor()
         scene.add(this.points);
         setInterval(() => this.#animate(), this.timeCount)
     }    
     updateToFrame(){
         this.geo.verticesNeedUpdate = true
     }
-    #getColor(){
-        this.colorIdx = Math.floor(Math.random() * this.colorPalete.length)
-    }
+    
     setColor(color){
         if(color) {
             let checkIdx = this.colorPalete.indexOf(new THREE.Color(color).getHex());
@@ -45,7 +42,6 @@ class TextPoints {
             this.colorIdx = (this.colorIdx + 1) % this.colorPalete.length
         }
         this.points.material.color.set(new THREE.Color(this.colorPalete[this.colorIdx]))
-        localStorage.setItem("vv-particle-color", this.colorIdx) 
     }
     #animate(){
         this.state = (this.state + 1) % this.loopRange;
