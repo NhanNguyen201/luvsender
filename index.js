@@ -42,7 +42,7 @@ app.get("/new", async (req, res) => {
 
 app.post("/new", rateLimit({
         windowMs: 30 * 60 * 1000, 
-        max: 50 
+        max: 5 
     }),async (req, res) => {
     const newMessage = await Message.create({
         firstText:  removeAscent(req.body.firstText),
@@ -54,7 +54,10 @@ app.post("/new", rateLimit({
 })
 
 
-app.post("/newImage", async(req, res) => {
+app.post("/newImage", rateLimit({
+        windowMs: 30 * 60 * 1000, 
+        max: 5 
+    }), async(req, res) => {
     const mimeTypeInclude = ['image/jpeg','image/png', 'image/gif']
     let quote = await getQuote()
     if(mimeTypeInclude.includes(req.files.image.mimetype)) {
