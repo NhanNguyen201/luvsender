@@ -28,7 +28,7 @@ app.use(setSafeHeader)
 
 app.use(fileupload({
     useTempFiles : true,
-    tempFileDir : '/'
+    tempFileDir : '/tmp'
 }))
 
 app.get("/", async (req, res) => {
