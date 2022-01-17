@@ -60,14 +60,16 @@ app.post("/newImage", rateLimit({
     }), async(req, res) => {
     const mimeTypeInclude = ['image/jpeg','image/png', 'image/gif']
     let quote = await getQuote()
-    if(mimeTypeInclude.includes(req.files.image.mimetype)) {
-        cloudinary.uploader.upload(req.files.image.tempFilePath, { upload_preset: 'luv-sender-pre', resource_type: "auto"}, async(error, result) => {
+    let tempImg = req.files.image;
+    
+    if(mimeTypeInclude.includes(tempImg.mimetype)) {
+        cloudinary.uploader.upload(tempImg.tempFilePath, { upload_preset: 'luv-sender-pre', resource_type: "auto"}, async(error, result) => {
             if(error) {
                 return res.render("new")
             } else {
                 const newImageMessage = await ImageMessage.create({
                     url: result.url,
-                    mimeType: req.files.image.mimetype
+                    mimeType: tempImg.mimetype
                 })
                 return res.render("new", { host: req.headers.host, linkId : newImageMessage._id, type: "i", quote })
             }
