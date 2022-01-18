@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/heart.jpg">
+
+    <title>Error</title>
+    <meta itemprop="name" content="Error">
+    <meta itemprop="image" content="./heart.jpg">
+    <!-- fb -->
+    <meta property="og:type" content="Website">
+    <meta property="og:title" content="Error">
+    <meta property="og:image" content="./heart.jpg">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col col-xl-6 col-lg-6 col-md-8 col-sm-10 col-xs-10 cenCol">
+                <p class="text-center"> <%= locals.error %> </p>
+                <a href="/" class="btn btn-primary copy-btn" role="button">Go to the home page</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -7,10 +7,9 @@ const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit')
 const setSafeHeader = require('./middlewares/setHeaderMiddleWare')
 const getQuote = require('./helpers/getQuote')
-const removeAscent = require('./helpers/removeAscent')
-const { cloudinary } = require('./helpers/cloudinary')
-const Message = require('./models/message');
-const ImageMessage = require('./models/imageMessage');
+
+const { createText, getTextApp } = require('./controllers/textController')
+const {  createImage, getImageApp } = require('./controllers/imageController')
 
 const app = express()
 
@@ -28,7 +27,7 @@ app.use(setSafeHeader)
 
 app.use(fileupload({
     useTempFiles : true,
-    tempFileDir : '/tmp'
+    tempFileDir : './tmp'
 }))
 
 app.get("/", async (req, res) => {
@@ -36,83 +35,23 @@ app.get("/", async (req, res) => {
     res.render("index", { quote })
 })
 
+app.get('/image', async (req, res) => {
+    let quote = await getQuote()
+    res.render("image", { quote })
+})
+
 app.get("/new", async (req, res) => {
     res.render("new")
 })
 
-app.post("/new", rateLimit({
-        windowMs: 30 * 60 * 1000, 
-        max: 5 
-    }),async (req, res) => {
-    const newMessage = await Message.create({
-        firstText:  removeAscent(req.body.firstText),
-        secondText: removeAscent(req.body.secondText)
-    })
-    let quote = await getQuote()
+app.post("/newText", rateLimit({ windowMs: 30 * 60 * 1000, max: 5 }), createText)
 
-    return res.render("new", { host: req.headers.host, linkId : newMessage._id, type: "t", quote })
-})
+app.post("/newImage", rateLimit({ windowMs: 30 * 60 * 1000, max: 5 }), createImage)
 
 
-app.post("/newImage", rateLimit({
-        windowMs: 30 * 60 * 1000, 
-        max: 5 
-    }), async(req, res) => {
-    const mimeTypeInclude = ['image/jpeg','image/png', 'image/gif']
-    let quote = await getQuote()
-    try {
-        let tempImg = req.files.image;
-        if(mimeTypeInclude.includes(tempImg.mimetype)) {
-            cloudinary.uploader.upload(tempImg.tempFilePath, { upload_preset: 'luv-sender-pre', resource_type: "auto"}, async(error, result) => {
-                if(error) {
-                    return res.render("new")
-                } else {
-                    const newImageMessage = await ImageMessage.create({
-                        url: result.url,
-                        mimeType: tempImg.mimetype
-                    })
-                    return res.render("new", { host: req.headers.host, linkId : newImageMessage._id, type: "i", quote })
-                }
-            })
-        } else {
-            return res.render("new")
-        }
-    } catch (error) {
-        console.log(error)
-    }
-})
+app.get("/t", getTextApp)
 
-app.get("/image", async (req, res) => {
-    res.render("image")
-})
-
-app.get("/t", async(req, res) => {
-    const { _id } = req.query;
-    let quote = await getQuote()
-
-    try {
-        const message = await Message.findById(_id)
-        return res.render("show", {firstText: message.firstText, secondText: message.secondText, quote})
-    } catch (error) {
-        return res.render("show", { quote })
-    }
-})
-
-app.get("/i", async(req, res) => {
-    const { _id } = req.query;
-    let quote = await getQuote()
-    const downloadImage = require('./helpers/downloadImage');
-    try {
-        const message = await ImageMessage.findById(_id)
-        let mimeType = message.mimeType.substr(6, message.mimeType.length - 6)
-        let filename = `a.${mimeType}`
-        downloadImage(message.url, `./public/${filename}`, () => {
-            return res.render("bloom", {imageUrl: `/${filename}`})
-        })
-    } catch (error) {
-        return res.render("show", { quote })
-    }
-})
+app.get("/i", getImageApp)
 
 const PORT = process.env.PORT || 5000
 mongoose.connect(process.env.MONGO_CON)
