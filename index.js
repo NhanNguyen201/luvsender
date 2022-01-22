@@ -9,7 +9,7 @@ const setSafeHeader = require('./middlewares/setHeaderMiddleWare')
 const getQuote = require('./helpers/getQuote')
 
 const { createText, getTextApp } = require('./controllers/textController')
-const {  createImage, getImageApp } = require('./controllers/imageController')
+const { createImage, getImageApp, getBoeveApp } = require('./controllers/imageController')
 
 const app = express()
 
@@ -52,6 +52,7 @@ app.post("/newImage", rateLimit({ windowMs: 30 * 60 * 1000, max: 5 }), createIma
 app.get("/t", getTextApp)
 
 app.get("/i", getImageApp)
+app.get("/b", getBoeveApp)
 
 const PORT = process.env.PORT || 5000
 mongoose.connect(process.env.MONGO_CON)

@@ -17,7 +17,11 @@ module.exports.createImage = async(req, res) => {
                         url: result.url,
                         mimeType: tempImg.mimetype
                     })
-                    return res.render("new", { host: req.headers.host, linkId : newImageMessage._id, type: "i", quote })
+                    let linkResult = [
+                        {linkId : newImageMessage._id, type: "i"}, 
+                        {linkId : newImageMessage._id, type: "b"} 
+                    ]
+                    return res.render("new", { host: req.headers.host, linkResult, quote })
                 }
             })
         } else {
@@ -34,9 +38,24 @@ module.exports.getImageApp = async(req, res) => {
     try {
         const message = await ImageMessage.findById(_id)
         let mimeType = message.mimeType.substr(6, message.mimeType.length - 6)
-        let filename = `a.${mimeType}`
+        let filename = `i-${Math.round(Math.random() * 10000)}.${mimeType}`
         downloadImage(message.url, `./public/${filename}`, () => {
             return res.render("bloom", {imageUrl: `/${filename}`, metaImg: `./${filename}`, quote})
+        })
+    } catch (error) {
+        return res.render("show", { quote })
+    }
+}
+
+module.exports.getBoeveApp = async(req, res) => {
+    const { _id } = req.query;
+    let quote = await getQuote()
+    try {
+        const message = await ImageMessage.findById(_id)
+        let mimeType = message.mimeType.substr(6, message.mimeType.length - 6)
+        let filename = `b-${Math.round(Math.random() * 10000)}.${mimeType}`
+        downloadImage(message.url, `./public/${filename}`, () => {
+            return res.render("boeve", {imageUrl: `/${filename}`, metaImg: `./${filename}`, quote})
         })
     } catch (error) {
         return res.render("show", { quote })

@@ -22,15 +22,19 @@
         <div class="row">
             <div class="col col-xl-6 col-lg-6 col-md-8 col-sm-10 col-xs-10 cenCol">
                 <h2 class="font-weight-light text-center">Send to your love !😝😝😝</h2>
-                <% if (locals.host && locals.linkId && locals.type) { %>
+                <% if (locals.host && locals.linkResult) { %>
                     <% if (locals.quote) { %>
                         <i><%= locals.quote %></i>
                     <% } %>
-                    <input type="text" value="<%= locals.host %>/<%= locals.type %>?_id=<%= locals.linkId %>" readonly class="form-control" id="url_input"/>
-                    <div class="btn-container">
-                        <button id="copy_btn" class="btn btn-primary copy-btn">Copy</button>
-                        <a href="/<%= locals.type %>?_id=<%= locals.linkId %>" class="btn btn-primary copy-btn" role="button">Go to the link</a>
-                    </div>
+                    <% for(let i=0; i< locals.linkResult.length; i++) {%>
+                        <div class="m-10">
+                            <input type="text" value="<%= locals.linkResult[i].host %>/<%= locals.linkResult[i].type %>?_id=<%= locals.linkResult[i].linkId %>" readonly class="form-control"/>
+                            <div class="btn-container">
+                                <button class="btn btn-primary copy-btn">Copy</button>
+                                <a href="/<%= locals.linkResult[i].type %>?_id=<%= locals.linkResult[i].linkId %>" class="btn btn-primary copy-btn" role="button">Go to the link</a>
+                            </div>
+                        </div>
+                    <% } %>
                 <% }  else { %>
                     <p>There is nothing here</p>
                 <% } %>    
@@ -38,12 +42,13 @@
         </div>
     </div>
     <script type='text/javascript'>
-        if(document.querySelector("#copy_btn")) {
-            const copyBtn = document.querySelector("#copy_btn")
-            const input = document.querySelector("#url_input")
-            copyBtn.onclick = () => {
-                navigator.clipboard.writeText(input.value)
-            }
+        if(document.querySelectorAll(".copy_btn")) {
+            const copyBtns = document.querySelectorAll(".copy_btn")
+            copyBtns.forEach(btn => {
+                btn.onclick = e => {
+                    console.log("previous value: ", btn.parentNode.previousSibling.value)
+                }
+            })
         }
     </script>
 </body>
