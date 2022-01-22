@@ -9,8 +9,8 @@ module.exports.createText = async(req, res) => {
             secondText: removeAscent(req.body.secondText)
         })
         let quote = await getQuote()
-        let result = [{linkId : newMessage._id, type: "t"}]
-        return res.render("new", { host: req.headers.host, result, quote })   
+        let linkResult = [{linkId : newMessage._id, type: "t"}]
+        return res.render("new", { host: req.headers.host, linkResult, quote })   
     } catch (error) {
         return res.render("error", { error: "Something is wrong !" })
     }
