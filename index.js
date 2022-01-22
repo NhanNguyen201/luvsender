@@ -44,9 +44,9 @@ app.get("/new", async (req, res) => {
     res.render("new")
 })
 
-app.post("/newText", rateLimit({ windowMs: 30 * 60 * 1000, max: 5 }), createText)
+app.post("/newText", rateLimit({ windowMs: 30 * 60 * 1000, max: 500 }), createText)
 
-app.post("/newImage", rateLimit({ windowMs: 30 * 60 * 1000, max: 5 }), createImage)
+app.post("/newImage", rateLimit({ windowMs: 30 * 60 * 1000, max: 500 }), createImage)
 
 
 app.get("/t", getTextApp)

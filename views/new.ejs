@@ -28,7 +28,7 @@
                     <% } %>
                     <% for(let i=0; i< locals.linkResult.length; i++) {%>
                         <div class="m-10">
-                            <input type="text" value="<%= locals.linkResult[i].host %>/<%= locals.linkResult[i].type %>?_id=<%= locals.linkResult[i].linkId %>" readonly class="form-control"/>
+                            <input type="text" value="<%= locals.host %>/<%= locals.linkResult[i].type %>?_id=<%= locals.linkResult[i].linkId %>" readonly class="form-control"/>
                             <div class="btn-container">
                                 <button class="btn btn-primary copy-btn">Copy</button>
                                 <a href="/<%= locals.linkResult[i].type %>?_id=<%= locals.linkResult[i].linkId %>" class="btn btn-primary copy-btn" role="button">Go to the link</a>
@@ -42,12 +42,10 @@
         </div>
     </div>
     <script type='text/javascript'>
-        if(document.querySelectorAll(".copy_btn")) {
-            const copyBtns = document.querySelectorAll(".copy_btn")
+        if(document.querySelectorAll(".copy-btn")) {
+            const copyBtns = document.querySelectorAll(".copy-btn")
             copyBtns.forEach(btn => {
-                btn.onclick = e => {
-                    console.log("previous value: ", btn.parentNode.previousSibling.value)
-                }
+                btn.onclick = e => navigator.clipboard.writeText(btn.parentNode.previousElementSibling.value)
             })
         }
     </script>
