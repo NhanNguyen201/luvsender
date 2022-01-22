@@ -35,29 +35,28 @@
 </head>
 <body>
     <canvas id="app"></canvas>
-    <script type='text/javascript' src="./gsap.min.js"></script>
-    <script type='text/javascript' src="./opentype.min.js"></script>
-    <script type='text/javascript' src="./three.min.js"></script>
-    <script type='text/javascript' src="./GeometryUtils.js"></script>
-    <script type='text/javascript' src="./OrbitControls.js"></script>
-    <script type='text/javascript' src="./TTFLoader.js"></script>
+    <script type='text/javascript' src="./js/gsap.min.js"></script>
+    <script type='text/javascript' src="./js/opentype.min.js"></script>
+    <script type='text/javascript' src="./js/three.min.js"></script>
+    <script type='text/javascript' src="./js/GeometryUtils.js"></script>
+    <script type='text/javascript' src="./js/OrbitControls.js"></script>
+    <script type='text/javascript' src="./js/TTFLoader.js"></script>
     <% if (locals.firstText && locals.secondText) { %>
-        <script type='text/javascript' src="./EffectComposer.js"></script>
-        <script type='text/javascript' src="./RenderPass.js"></script>
-        <script type='text/javascript' src="./CopyShader.js"></script>
-        <script type='text/javascript' src="./ShaderPass.js"></script>
-        <script type='text/javascript' src="./AfterimagePass.js"></script>
-        <script type='text/javascript' src="./AfterimageShader.js"></script>
-        <script type='text/javascript' src="./textPoints.js"></script>
-        <script type='text/javascript' src="./threeApp.js"></script>
+        <script type='text/javascript' src="./js/EffectComposer.js"></script>
+        <script type='text/javascript' src="./js/RenderPass.js"></script>
+        <script type='text/javascript' src="./js/CopyShader.js"></script>
+        <script type='text/javascript' src="./js/ShaderPass.js"></script>
+        <script type='text/javascript' src="./js/AfterimagePass.js"></script>
+        <script type='text/javascript' src="./js/AfterimageShader.js"></script>
+        <script type='text/javascript' src="./main/textPoints.js"></script>
+        <script type='text/javascript' src="./main/threeApp.js"></script>
         <script>
             let txt_1 = JSON.parse('<%- JSON.stringify(locals.firstText) %>')
             let txt_2 = JSON.parse('<%- JSON.stringify(locals.secondText) %>')
             const scene = new App(txt_1, txt_2)
-            
         </script>
     <% }  else {%>
-        <script type='text/javascript' src="./notFound.js"></script>
+        <script type='text/javascript' src="./main/notFound.js"></script>
         <script>
             const scene = new NotFoundApp();
          </script>

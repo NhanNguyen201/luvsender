@@ -40,10 +40,6 @@ app.get('/image', async (req, res) => {
     res.render("image", { quote })
 })
 
-app.get("/new", async (req, res) => {
-    res.render("new")
-})
-
 app.post("/newText", rateLimit({ windowMs: 30 * 60 * 1000, max: 5 }), createText)
 
 app.post("/newImage", rateLimit({ windowMs: 30 * 60 * 1000, max: 5 }), createImage)

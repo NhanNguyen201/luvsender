@@ -1,10 +1,12 @@
 Fun from threejs
 
-** Step 1
+**Step 1**
+
 run `npm i`
 
-** Step 2
-set up the env variable
+**Step 2**
+
+set up the in your `.env` file
 
 MONGO_CON = Your mongoDb connection string
 

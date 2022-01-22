@@ -73,7 +73,7 @@ class App {
         ...config
       })
   
-      new THREE.TTFLoader().load("./Potra.otf", data => {
+      new THREE.TTFLoader().load("./fonts/Potra.otf", data => {
   
         let ttfFont = new THREE.FontLoader().parse(data)
         

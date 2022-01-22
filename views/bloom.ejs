@@ -35,29 +35,28 @@
 </head>
 <body>
     <canvas id="app"></canvas>
-    <script type='text/javascript' src="./gsap.min.js"></script>
-    <script type='text/javascript' src="./opentype.min.js"></script>
-
-    <script type='text/javascript' src="./three.min.js"></script>
-    <script type='text/javascript' src="./GeometryUtils.js"></script>
-    <script type='text/javascript' src="./OrbitControls.js"></script>
-    <script type='text/javascript' src="./TTFLoader.js"></script>
+    <script type='text/javascript' src="./js/gsap.min.js"></script>
+    <script type='text/javascript' src="./js/opentype.min.js"></script>
+    <script type='text/javascript' src="./js/three.min.js"></script>
+    <script type='text/javascript' src="./js/GeometryUtils.js"></script>
+    <script type='text/javascript' src="./js/OrbitControls.js"></script>
+    <script type='text/javascript' src="./js/TTFLoader.js"></script>
     <% if (locals.imageUrl) { %>
-        <script type='text/javascript' src="./EffectComposer.js"></script>
-        <script type='text/javascript' src="./RenderPass.js"></script>
-        <script type='text/javascript' src="./CopyShader.js"></script>
-        <script type='text/javascript' src="./ShaderPass.js"></script>
-        <script type='text/javascript' src="./LuminosityHighPassShader.js"></script>
-        <script type='text/javascript' src="./UnrealBloomPass.js"></script>
+        <script type='text/javascript' src="./js/EffectComposer.js"></script>
+        <script type='text/javascript' src="./js/RenderPass.js"></script>
+        <script type='text/javascript' src="./js/CopyShader.js"></script>
+        <script type='text/javascript' src="./js/ShaderPass.js"></script>
+        <script type='text/javascript' src="./js/LuminosityHighPassShader.js"></script>
+        <script type='text/javascript' src="./js/UnrealBloomPass.js"></script>
         
-        <script type='text/javascript' src="./constants.js"></script>
-        <script type='text/javascript' src="./bloomApp.js"></script>
+        <script type='text/javascript' src="./main/constants.js"></script>
+        <script type='text/javascript' src="./main/bloomApp.js"></script>
         <script>
             let img = '<%=locals.imageUrl%>'
             const scene = new App(img)
         </script>
     <% }  else {%>
-        <script type='text/javascript' src="./notFound.js"></script>
+        <script type='text/javascript' src="./main/notFound.js"></script>
         <script>
             const scene = new NotFoundApp();
          </script>
