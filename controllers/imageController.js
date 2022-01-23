@@ -2,6 +2,7 @@ const downloadImage = require('../helpers/downloadImage');
 const getQuote = require('../helpers/getQuote')
 const cloudinary = require('../helpers/cloudinary')
 const ImageMessage = require('../models/imageMessage')
+const imageCache = require('../helpers/fileCache');
 
 module.exports.createImage = async(req, res) => {
     const mimeTypeInclude = ['image/jpeg','image/png', 'image/gif']
@@ -36,12 +37,18 @@ module.exports.getImageApp = async(req, res) => {
     const { _id } = req.query;
     let quote = await getQuote()
     try {
-        const message = await ImageMessage.findById(_id)
-        let mimeType = message.mimeType.substr(6, message.mimeType.length - 6)
-        let filename = `i-${Math.round(Math.random() * 10000)}.${mimeType}`
-        downloadImage(message.url, `./public/${filename}`, () => {
-            return res.render("bloom", {imageUrl: `/${filename}`, metaImg: `./${filename}`, quote})
-        })
+        if(imageCache.hasFile(_id)){
+            let cachedImage = imageCache.getFile(_id).file
+            return res.render("bloom", {imageUrl: `/${cachedImage}`, metaImg: `./${cachedImage}`, quote})
+        } else {
+            const message = await ImageMessage.findById(_id)
+            let mimeType = message.mimeType.substr(6, message.mimeType.length - 6)
+            let filename = `${Math.round(Math.random() * 10000)}.${mimeType}`
+            downloadImage(message.url, `./public/${filename}`, () => {
+                imageCache.setFile(_id, filename)
+                return res.render("bloom", {imageUrl: `/${filename}`, metaImg: `./${filename}`, quote})
+            })
+        }
     } catch (error) {
         return res.render("show", { quote })
     }
@@ -51,12 +58,18 @@ module.exports.getBoeveApp = async(req, res) => {
     const { _id } = req.query;
     let quote = await getQuote()
     try {
-        const message = await ImageMessage.findById(_id)
-        let mimeType = message.mimeType.substr(6, message.mimeType.length - 6)
-        let filename = `b-${Math.round(Math.random() * 10000)}.${mimeType}`
-        downloadImage(message.url, `./public/${filename}`, () => {
-            return res.render("boeve", {imageUrl: `/${filename}`, metaImg: `./${filename}`, quote})
-        })
+        if(imageCache.hasFile(_id)){
+            let cachedImage = imageCache.getFile(_id).file
+            return res.render("boeve", {imageUrl: `/${cachedImage}`, metaImg: `./${cachedImage}`, quote})
+        } else {
+            const message = await ImageMessage.findById(_id)
+            let mimeType = message.mimeType.substr(6, message.mimeType.length - 6)
+            let filename = `${Math.round(Math.random() * 10000)}.${mimeType}`
+            downloadImage(message.url, `./public/${filename}`, () => {
+                imageCache.setFile(_id, filename)
+                return res.render("boeve", {imageUrl: `/${filename}`, metaImg: `./${filename}`, quote})
+            })
+        }
     } catch (error) {
         return res.render("show", { quote })
     }
