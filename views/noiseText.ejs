@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/heart.jpg">
+    <meta itemprop="name" content="Love sender">
+    <meta itemprop="image" content="./heart.jpg">
+    <meta name="description" content='<%= locals.quote %>'>
+    <!-- fb -->
+    <meta property="og:type" content="Website">
+    <meta property="og:title" content="Love sender">
+    <meta property="og:image" content="./heart.jpg">
+    <title><%= locals.quote %></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+        
+        #app, canvas {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+        
+    </style>
+</head>
+<body>
+    <canvas id="app"></canvas>
+    <script type='text/javascript' src="./js/gsap.min.js"></script>
+    <script type='text/javascript' src="./js/opentype.min.js"></script>
+    <script type='text/javascript' src="./js/three.min.js"></script>
+    <script type='text/javascript' src="./js/GeometryUtils.js"></script>
+    <script type='text/javascript' src="./js/OrbitControls.js"></script>
+    <script type='text/javascript' src="./js/TTFLoader.js"></script>
+    <% if (locals.nameText) { %>
+        <script type='text/javascript' src="./js/EffectComposer.js"></script>
+        <script type='text/javascript' src="./js/RenderPass.js"></script>
+        <script type='text/javascript' src="./js/CopyShader.js"></script>
+        <script type='text/javascript' src="./js/ShaderPass.js"></script>
+        <script type='text/javascript' src="./js/AfterimagePass.js"></script>
+        <script type='text/javascript' src="./js/AfterimageShader.js"></script>
+        <script type='text/javascript' src="./main/constants.js"></script>
+        <script type='text/javascript' src="./main/noiseTextApp.js"></script>
+        <script>
+            let parseNameText = '<%- locals.nameText %>'
+            const scene = new App(parseNameText)
+        </script>
+    <% }  else {%>
+        <script type='text/javascript' src="./main/notFound.js"></script>
+        <script>
+            const scene = new NotFoundApp();
+         </script>
+    <% } %>
+    <script >
+        document.addEventListener("DOMContentLoaded", e => {
+            scene.init();
+        })
+        console.log('<%- JSON.stringify(locals.quote) %>')
+    </script>
+</body>
+</html>

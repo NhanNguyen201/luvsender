@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content='<%= locals.quote %>'>
+        <link rel="icon" type="image/x-icon" href="/heart.jpg">
+        <title>Send to your luv !</title>
+        <!-- google -->
+        <meta itemprop="name" content="Love sender">
+        <meta itemprop="image" content="./heart.jpg">
+        <meta name="description" content='<%= locals.quote %>'>
+        <!-- fb -->
+        <meta property="og:type" content="Website">
+        <meta property="og:title" content="Love sender">
+        <meta property="og:image" content="./heart.jpg">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+                                                                                                                                                  <div class="container">
+            <div class="row">
+                <div class="col col-xl-6 col-lg-6 col-md-8 col-sm-10 col-xs-10 cenCol">
+                    <% if (locals.quote) { %>
+                        <i><%= locals.quote %></i>
+                    <% } %>
+                    <h2 class="font-weight-light text-center">Send to your love </h2>
+                    <form action="/newNoiseText" method="post">
+                        <div class="form-group">
+                            <label for="nameText">Text here</label>
+                            <input required type="text" name="nameText" id="nameText" class="form-control" placeholder="Recommend short text !"/>
+                        </div>
+                        <div class="btn-container m-10">
+                            <button type="submit" class="btn btn-primary text-right">Submit</button>
+                            <a href="/image" class="btn btn-dark text-left">To image post</a>
+                        </div>
+                        <div class="btn-container flex-reverse">
+                            <a href="/" class="btn btn-dark text-left">To 2 text input post</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

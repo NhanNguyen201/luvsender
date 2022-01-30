@@ -71,6 +71,7 @@ module.exports.getBoeveApp = async(req, res) => {
             })
         }
     } catch (error) {
+        console.log(error)
         return res.render("show", { quote })
     }
 }

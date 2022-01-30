@@ -8,7 +8,7 @@ const rateLimit = require('express-rate-limit')
 const setSafeHeader = require('./middlewares/setHeaderMiddleWare')
 const getQuote = require('./helpers/getQuote')
 
-const { createText, getTextApp } = require('./controllers/textController')
+const { createText,createNoiseText, getTextApp, getNoiseTextApp } = require('./controllers/textController')
 const { createImage, getImageApp, getBoeveApp } = require('./controllers/imageController')
 
 const app = express()
@@ -40,15 +40,22 @@ app.get('/image', async (req, res) => {
     res.render("image", { quote })
 })
 
+app.get('/ntext', async(req, res) => {
+    let quote = await getQuote()
+    res.render("text", { quote })
+})
+
 app.post("/newText", rateLimit({ windowMs: 30 * 60 * 1000, max: 5 }), createText)
 
 app.post("/newImage", rateLimit({ windowMs: 30 * 60 * 1000, max: 5 }), createImage)
 
+app.post("/newNoiseText", rateLimit({ windowMs: 30 * 60 * 1000, max: 5 }), createNoiseText)
 
 app.get("/t", getTextApp)
 
 app.get("/i", getImageApp)
 app.get("/b", getBoeveApp)
+app.get("/nt", getNoiseTextApp)
 
 const PORT = process.env.PORT || 5000
 mongoose.connect(process.env.MONGO_CON)
